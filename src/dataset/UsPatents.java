@@ -37,6 +37,8 @@ public class UsPatents extends Dataset {
 		public static final String APPLN_ID = "APPLN_ID";
 		public static final String MAPPING = "MAPPING";
 	}
+
+	private int[] docNb2Mapping;
 	
 	public UsPatents() {
 		super(DATASET_NAME);
@@ -206,6 +208,7 @@ public class UsPatents extends Dataset {
 		
 		docNb2Id = new int[nbDocs];
 		docNb2Label = new int[nbDocs];
+		docNb2Mapping = new int[nbDocs];
 		docNb2Lenght = new int[nbDocs];
 		for (int doc=0; doc<nbDocs; doc++) {
 			TermFreqVector termFreqVector = reader.getTermFreqVector(doc, FieldName.CONTENT);
@@ -217,8 +220,10 @@ public class UsPatents extends Dataset {
 			}
 			int id = Integer.valueOf(reader.document(doc).getField(FieldName.ID).stringValue());
 			int label = Integer.valueOf(reader.document(doc).getField(FieldName.LABEL).stringValue());
+			int mapping = Integer.valueOf(reader.document(doc).getField(FieldName.MAPPING).stringValue());
 			docNb2Id[doc] = id;
 			docNb2Label[doc] = label;
+			docNb2Mapping[doc] = mapping;
 			docNbs.get(label).add(doc);
 			
 			if (doc%100000 == 0) {
@@ -231,5 +236,9 @@ public class UsPatents extends Dataset {
 			System.out.println("   " + label + ": (" + label2NbDocs[label] + " patents)");
 		}
 		reader.close();
+	}
+	
+	public int getMapping(int docNb) {
+		return docNb2Mapping[docNb];
 	}
 }
