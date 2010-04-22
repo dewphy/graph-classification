@@ -11,7 +11,7 @@ import utilities.FileHandler;
 
 public abstract class Dataset {
 	
-	public static final String ROOT = "/fs1/pdewagter";
+	public static final String ROOT = ".";
 	
 	public static final String DATASETS = ROOT + "/datasets/";
 	public static final String INDEXES = ROOT + "/indexes/";
